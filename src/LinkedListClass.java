@@ -42,6 +42,7 @@ public class LinkedListClass {
 			temp.next = head;
 			this.head = temp;
 		}
+		System.out.println("Deleted Successfully");
 		count++;
 	}
 
@@ -75,6 +76,7 @@ public class LinkedListClass {
 				temp.next = current.next;
 				current = current.next;
 				current.previous = temp;
+				System.out.println("Deleted successfully");
 			}
 
 		}
@@ -89,6 +91,7 @@ public class LinkedListClass {
 			//// If only 1 element in the linked list
 			this.head = null;
 			count--;
+			System.out.println("Deleted Successfully");
 			return true;
 		} else {
 			Node current = this.head;
@@ -96,6 +99,7 @@ public class LinkedListClass {
 			current.previous = null;
 			this.head = current;
 			count--;
+			System.out.println("Deleted Successfully");
 			return true;
 		}
 	}
@@ -116,6 +120,7 @@ public class LinkedListClass {
 			Node temp = current.previous;
 			temp.next = null;
 		}
+		System.out.println("Deleted Successfully");
 		count--;
 	}
 
@@ -128,7 +133,6 @@ public class LinkedListClass {
 				System.out.println(current.getData() + " ");
 				current = current.next;
 			}
-
 			System.out.println();
 		}
 	}
@@ -152,6 +156,7 @@ public class LinkedListClass {
 			current.next = temp;
 			this.count++;
 		}
+		System.out.println("Added Successfully");
 	}
 
 	public boolean search(Object o) {
@@ -165,10 +170,32 @@ public class LinkedListClass {
 		//// traversing the linked list
 		while (current != null) {
 			if (current.getData().equals(o)) {
+				System.out.println("Object found");
 				return true;
 			}
 			current = current.next;
 		}
 		return false;
 	}
+
+	public void sort() {
+		int i = 0;
+		Object o;
+		while (i < this.count) {
+			Node current = this.head.next;
+			Node temp = this.head;
+			while (current!=null) {
+				//System.out.println("Comparing "+temp.getData()+" with "+current.getData()+" gives "+(temp.getData().toString().compareTo(current.getData().toString())));
+				if((temp.getData().toString().compareTo(current.getData().toString()))>0) {
+				o=temp.getData();
+				temp.setData(current.getData());
+				current.setData(o);				
+				}
+				temp=current;
+				current=current.next;
+			}
+			i++;
+		}
+	}
+
 }

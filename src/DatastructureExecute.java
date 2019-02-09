@@ -7,12 +7,12 @@ public class DatastructureExecute {
 		try {
 			int num;
 			do {
-				String[] Questions = { };
+				String[] Questions = { "UnorderedList", "OrderedList" };
 				for (int i = 0; i < Questions.length; i++) {
 					System.out.println("Enter " + (i + 1) + "for: " + Questions[i]);
 				}
 				System.out.println("Enter 0 to close");
-				num = Utility.inputPositiveInteger();
+				num = Utility.isInteger();
 				//// to check if number >
 
 				switch (num) {
@@ -21,14 +21,17 @@ public class DatastructureExecute {
 					return;
 
 				case 1:
-					
+					UnorderedList ul = new UnorderedList();
+					ul.unorderedListDemo();
 					break;
-					
+				case 2: 
+					OrderedList ol = new OrderedList();
+					ol.orderedListDemo();
+					break;					
 				default:
 					System.out.println("Not yet created ");
 					break;
 				}
-
 			} while (num != 0);
 
 		} catch (Exception e) {

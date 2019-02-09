@@ -1,8 +1,13 @@
-	/**	 
-	 * @author prayas
-	 * Created on 15 Jan 2018 
-	 * Version 11.0.1
-	 */
+
+/**	 
+ * @author prayas
+ * Created on 15 Jan 2018 
+ * Version 11.0.1
+ */
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +16,8 @@ import java.util.Stack;
 public class Utility {
 	//// Scanner variable
 	static Scanner s = new Scanner(System.in);
+	static File f = null;
+	static FileWriter fr = null;
 
 	/// function to check the leap year
 	static boolean leapYear(int year) {
@@ -28,48 +35,40 @@ public class Utility {
 	}
 
 	public static int isInteger() {
-		List<String> list = new LinkedList<>();
-		list=new Stack<>();
-		try {
-			String input = s.nextLine();
-			int num = Integer.parseInt(input);
-
-			return num;
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return -999;
+		int num = -999;
+		while (num == -999) {
+			try {
+				String input = s.nextLine();
+				num = Integer.parseInt(input);
+			} catch (Exception e) {
+				System.out.println("Enter the proper number");
+				num = -999;
+			}
 		}
+		return num;
 	}
 
 	public static int isPositiveInteger() {
-
-		try {
-			String input = s.nextLine();
-			int num = Integer.parseInt(input);
-			if (num > 0) {
-				return num;
-			} else {
-				return -1;
+		int num = -1;
+		while (num <= -1) {
+			try {
+				String input = s.nextLine();
+				num = Integer.parseInt(input);
+				if (num > 0) {
+					break;
+				} else {
+					System.out.println("Please enter a positive number");
+				}
+			} catch (Exception e) {
+				System.out.println("Please enter a positive number");
 			}
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return -1;
-		}
-	}
-
-	public static int inputInteger() {
-		int num;
-		num = Utility.isInteger();
-		while (num == -999) {
-			System.out.println("Enter the proper number");
-			num = Utility.isInteger();
 		}
 		return num;
 	}
 
 	public static int inputPositiveInteger() {
 		int num;
-		num = Utility.isPositiveInteger();
+		num = Utility.isInteger();
 		while (num <= -1) {
 			System.out.println("Enter the proper number");
 			num = Utility.isInteger();
@@ -136,48 +135,6 @@ public class Utility {
 
 	}
 
-	//// uses selection sort for sorting
-	static int[] sortInt(int[] a) {
-		int i, j, temp;
-		for (i = 0; i < a.length; i++) {
-			for (j = i + 1; j < a.length; j++) {
-				if (a[i] > a[j]) {
-					temp = a[i];
-					a[i] = a[j];
-					a[j] = temp;
-				}
-			}
-		}
-		for (i = 0; i < a.length; i++)
-			System.out.print(a[i] + " ");
-		System.out.println();
-		return a;
-
-	}
-
-	static String[] sortString(String[] a) {
-		int i, j, flag;
-		String var1, var2, temp;
-		for (i = 0; i < a.length; i++) {
-			for (j = i + 1; j < a.length; j++) {
-				// to compare by alphabets and not by cases
-				var1 = a[i].toLowerCase();
-				var2 = a[j].toLowerCase();
-				flag = var1.compareTo(var2);
-				if (flag > 0) {
-					temp = a[i];
-					a[i] = a[j];
-					a[j] = temp;
-				}
-			}
-		}
-		for (i = 0; i < a.length; i++)
-			System.out.print(a[i] + " ");
-		System.out.println();
-		return a;
-
-	}
-
 	static void anagrams(String string1, String string2) {
 
 		int i, flag = 0;
@@ -215,36 +172,11 @@ public class Utility {
 
 	}
 
-	static void binarySearch(int array[], int num) {
-		int i, length, low, high, mid;
-		array = sortInt(array);
-		length = array.length;
-
-		low = 0;
-		high = length - 1;
-
-		for (i = 0; i < length / 2 + 1; i++) {
-			mid = (low + high) / 2;
-			if (num == array[mid]) {
-				System.out.println("Number found at position " + (mid + 1));
-				return;
-			}
-			if (num < array[mid]) {
-				high = mid;
-			} else {
-				low = mid + 1;
-			}
-		}
-		System.out.println("Number not found");
-
-	}
-
 	static void BinarySearch(String[] array, String num) {
 
-		array = sortString(array);
 		int flag, i, length, low, high, mid;
-
 		length = array.length;
+		array = bubbleSortString(array, length);
 		low = 0;
 		high = length - 1;
 		for (i = 0; i < length; i++) {
@@ -291,52 +223,6 @@ public class Utility {
 		for (j = index; j >= till + 1; j--) {
 			array[j] = array[j - 1];
 		}
-		return array;
-	}
-
-	// insertion sort of array
-	static int[] insertionSortInt(int[] array, int length) {
-		int i, j, temp, index;
-
-		for (j = 0; j < length; j++) {
-			// System.out.println("In j= "+j);
-			for (i = j + 1; i < length; i++) {
-				if (array[j] > array[i]) {
-					temp = array[i];
-					index = i;
-					array = swipeInt(array, index, i);
-					array[j] = temp;
-					// System.out.println("Array after swipe ");
-					// for(int c=0;c<length;c++)System.out.print(" "+array[c]);
-					// System.out.println();
-				}
-			}
-		}
-		// System.out.println("The sorted array is");
-		// for(i=0;i<length;i++) System.out.print(" "+array[i]);
-		return array;
-	}
-
-	static String[] insertionSortString(String[] array, int length) {
-		int i, j, index;
-		String temp;
-
-		for (j = 0; j < length; j++) {
-			// System.out.println("In j= "+j);
-			for (i = j + 1; i < length; i++) {
-				if (array[j].compareTo(array[i]) > 1) {
-					temp = array[i];
-					index = i;
-					array = swipeString(array, index, i);
-					array[j] = temp;
-					// System.out.println("Array after swipe ");
-					// for(int c=0;c<length;c++)System.out.print(" "+array[c]);
-					// System.out.println();
-				}
-			}
-		}
-		// System.out.println("The sorted array is");
-		// for(i=0;i<length;i++) System.out.print(" "+array[i]);
 		return array;
 	}
 
@@ -447,5 +333,53 @@ public class Utility {
 		}
 		return 0;
 	}
-}
 
+	static void appendToFile(String path, String str) throws IOException {
+
+		File f = new File(path);
+		try {
+			fr = new FileWriter(f, true);
+			fr.write(str);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			fr.close();
+		}
+	}
+
+	static void writeToFile(String path, String str) throws IOException {
+
+		File f = new File(path);
+		FileWriter fr = null;
+		try {
+			fr = new FileWriter(f);
+			fr.write(str);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		fr.close();
+	}
+
+	static LinkedListClass Read1LineFile(String path) throws FileNotFoundException {
+
+		File f = new File(path);
+		LinkedListClass llc = new LinkedListClass();
+		Scanner filescanner = null;
+		try {
+			filescanner = new Scanner(f);
+
+			while (filescanner.hasNext()) {
+				llc.add(filescanner.next());
+			}
+
+		} catch (Exception e) {
+			System.out.println("The process stopped because " + e);
+		}
+		filescanner.close();
+		return llc;
+	}
+
+	static void clearFile(String path) throws IOException {
+		writeToFile(path, "");
+	}
+}
